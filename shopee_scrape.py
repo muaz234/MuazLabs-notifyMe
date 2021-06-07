@@ -1,15 +1,17 @@
+import sendgrid
+import os
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 from time import sleep
 from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
+from sendgrid.helpers.mail import *
 
 # /usr/bin/python
 chrome_options = Options()
 # chrome_options.add_argument("--headless")
 
-sendgrid_api_key = "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"
+
 url = 'https://shopee.com.my/product/66318056/7658696983/'
 # url = 'https://shopee.com.my/product/724335/2212828002' // sample for testing purpose
 driver = webdriver.Chrome(ChromeDriverManager().install())
@@ -34,13 +36,13 @@ if out == "0":
         subject='Shopee Script - Your item is still empty!',
         html_content='<div><p>Item is still empty in the cart</p></div><div style="text-align: center;"><img src="https://i.redd.it/9d7sw78owea11.png" width="50%" height="50%"  alt="meme_empty_cart"></img></div>')
     try:
-        sg = SendGridAPIClient(sendgrid_api_key)
+        sg = SendGridAPIClient(api_key=os.environ.get('SENDGRID_API_KEY'))
         response = sg.send(message)
         # print(response.status_code)
         # print(response.body)
         # print(response.headers)
     except Exception as e:
-        print(e.message)
+        print(e)
 else:
     print("Product is available to purchase!")
     #to insert in else block
@@ -68,7 +70,7 @@ else:
         subject='Shopee Script - Your item is back in stock!',
         html_content='<strong>Buy now!. Item is available and selling like hot cakes. </strong>')
     try:
-        sg = SendGridAPIClient(sendgrid_api_key)
+        sg = SendGridAPIClient(api_key=os.environ.get('SENDGRID_API_KEY'))
         response = sg.send(message)
         print(response.status_code)
         print(response.body)
