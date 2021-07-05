@@ -20,15 +20,15 @@ driver.get(url)
 
 # click the english language button
 driver.find_element_by_xpath("""//*[@id="modal"]/div[1]/div[1]/div/div[3]/div[1]/button""").click()
-
 sleep(3)
+# click disc version 
+driver.find_element_by_xpath("""//*[@id="main"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[4]/div/div[4]/div/div[1]/div/button[1]""").click();
 
 # stock reading count on the product detail section
-out = driver.find_element_by_xpath("""//*[@id="main"]/div/div[2]/div[2]/div[2]/div[3]/div[2]/div[1]/div[1]/div[1]/div[2]/div[7]/div""").text
+out = driver.find_element_by_xpath("""//*[@id="main"]/div/div[2]/div[2]/div[2]/div[2]/div[3]/div/div[4]/div/div[4]/div/div[2]/div[2]/div[2]""").text
 
-
-# print(buy_now)
-if out == "0":
+exit
+if out == "0 piece available":
     print("Product still out of stock")
     message = Mail(
         from_email='muaz.noreply@gmail.com',
@@ -76,6 +76,6 @@ else:
         print(response.body)
         print(response.headers)
     except Exception as e:
-        print(e.message)
+        print(e)
 
 driver.quit()
